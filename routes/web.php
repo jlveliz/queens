@@ -12,9 +12,9 @@
 */
 
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('login', 'Auth\LoginController@login')->name('dologin');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-// Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/vote/{event?}', 'HomeController@vote')->name('vote');
+Route::get('/admin', 'AdminController@index')->name('home');

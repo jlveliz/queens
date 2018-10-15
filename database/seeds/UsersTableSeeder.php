@@ -13,11 +13,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $password = 'admin';
+        $password = 'juezuno';
         $password = Hasher::make($password);
         User::create([
-        	'role' => 'admin',
-        	'username' => 'admin',
+        	'role' => 'juez',
+        	'username' => 'juezuno',
         	'password' =>$password
         ]);
     }

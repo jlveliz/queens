@@ -1,47 +1,51 @@
-@extends('layouts.app')
+@extends('layouts.frontend')
+
+@section('css')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+@endsection()
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label for="username" class="col-md-4 control-label">Usuario</label>
-
-                            <div class="col-md-6">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
-
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Contraseña</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<div id="wrapper">
+      <div id="login" class="animated form bounceIn">
+        <section class="login_content">
+          <img src="{{ asset('images/logo.png') }}" style="width: 70%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
+          <form method="post" action="{{ route('dologin') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <h1>{{config('app.name')}} <br> Ingreso</h1>
+            @if (count($errors) > 0)
+              <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                    </button>
+                    @foreach ($errors->all() as $error)
+                      <strong>{!!$error!!}</strong> <br>
+                    @endforeach
+                  </div>
+            @endif
+              <div>
+              <input type="text" class="form-control" placeholder="Usuario" name="username" id="username" required="" autocomplete="false" autofocus />
             </div>
-        </div>
-    </div>
+            <div>
+              <input type="password" class="form-control" placeholder="Clave" name="password" id="password" required="" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-block btn-submit">Ingresar</button>
+              
+            </div>
+            <div class="clearfix"></div>
+            <div class="separator">
+              <div class="clearfix"></div>
+              <br />
+              <div class="footer-login">
+                <h4><i class="fa fa-cog"></i> {{config('app.name')}}</h4>
+
+                <p class="copyright">©{{date('Y')}} Todos los derechos reservados. Una aplicación de <b>Gobierno Provincial del Guayas.</b></p>
+              </div>
+            </div>
+          </form>
+          <!-- form -->
+        </section>
+        <!-- content -->
+      </div>
 </div>
+
 @endsection
