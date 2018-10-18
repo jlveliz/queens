@@ -7,7 +7,13 @@
         <h1 class="text-center"> {{config('app.name')}} - {{date('Y')}}  </h1>
 
         <div class="panel panel-default">
-            <div class="panel-heading text-center" style="font-size: 20px"><b>Seleccione un evento para continuar</b></div>
+            <div class="panel-heading text-center" style="font-size: 20px"><b>Seleccione un evento para continuar</b>
+                <br>
+                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Salir</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </div>
 
             <div class="panel-body">
                 <div class="row">
