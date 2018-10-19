@@ -36,7 +36,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li class="@if(Request::path() == 'admin') active @endif"><a href="{{ url('admin') }}">Tablero</a></li>
+                        <li class="@if(Request::path() == 'admin/miss') active @endif"><a href="{{ url('admin/miss') }}">Candidatas</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

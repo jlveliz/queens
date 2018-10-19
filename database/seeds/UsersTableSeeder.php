@@ -16,8 +16,16 @@ class UsersTableSeeder extends Seeder
         $password = 'juezuno';
         $password = Hasher::make($password);
         User::create([
-        	'role' => 'juez',
-        	'username' => 'juezuno',
+            'role' => 'juez',
+            'username' => 'juezuno',
+            'password' =>$password
+        ]);
+
+        $password = 'admin';
+        $password = Hasher::make($password);
+        User::create([
+        	'role' => 'admin',
+        	'username' => 'admin',
         	'password' =>$password
         ]);
     }
