@@ -18,9 +18,8 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/vote/{event?}', 'HomeController@vote')->name('vote');
 
-Route::prefix('/admin')->group(function() {
-
+Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::get('/','AdminController@index');
 	Route::resource('/misses', 'MissController');
-
+	Route::resource('/cities', 'CityController');
 });

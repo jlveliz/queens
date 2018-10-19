@@ -1,7 +1,7 @@
 <?php
 namespace  App\RepositoryInterface;
 
-interface  MissRepositoryInterface extends CoreRepositoryInterface {
+interface  CityRepositoryInterface extends CoreRepositoryInterface {
 	
 	// public function paginate();
 

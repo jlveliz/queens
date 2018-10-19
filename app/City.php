@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Miss extends Model
+class City extends Model
 {
-    protected $table = 'miss';
+    protected $table = 'city';
 
     public $timestamps = false;
 
-    protected $fillable = ['*'];
-  
+    protected $fillable = ['name','state'];
 }

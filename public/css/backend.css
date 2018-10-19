@@ -1,0 +1,22 @@
+/**
+nav
+*/
+.container-app {
+    background-color: #ffffff;
+}
+
+#panel-container {
+    padding: 20px;
+}
+
+.subtitle {
+    padding: 10px;
+}
+
+.no-padding {
+    padding: 0px !important
+}
+
+.no-padding-left {
+    padding-left: 0px !important
+}

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -37,7 +38,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li class="@if(Request::path() == 'admin') active @endif"><a href="{{ url('admin') }}">Tablero</a></li>
-                        <li class="@if(Request::path() == 'admin/miss') active @endif"><a href="{{ url('admin/miss') }}">Candidatas</a></li>
+                        <li class="@if(Request::path() == 'admin/misses') active @endif"><a href="{{ url('admin/miss') }}">Candidatas</a></li>
+                        <li class="@if(Request::path() == 'admin/cities') active @endif"><a href="{{ url('admin/cities') }}">Cantones</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -71,7 +73,16 @@
             </div>
         </nav>
 
-        @yield('content')
+
+        <div class="container container-app">
+            <div id="panel-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->

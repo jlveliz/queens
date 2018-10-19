@@ -13,7 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 
     /**
@@ -23,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('App\RepositoryInterface\MissRepositoryInterface','App\Repository\MissRepository');
+        $this->app->bind('App\RepositoryInterface\CityRepositoryInterface','App\Repository\CityRepository');
+        
     }
 }

@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use  App\RepositoryInterface\MissRepositoryInterface;
+use  App\RepositoryInterface\CityRepositoryInterface;
 
-class MissController extends Controller
+class CityController extends Controller
 {
     
-    private $miss;
+    private $city;
     
-    public function __construct(MissRepositoryInterface $miss)
+    public function __construct(CityRepositoryInterface $city)
     {
-        $this->miss = $miss;
+        $this->city = $city;
     }
 
     /**
@@ -22,8 +22,8 @@ class MissController extends Controller
      */
     public function index()
     {
-        $misses = $this->miss->enum();
-        return view('admin.misses.index',compact('misses'));
+        $cities = $this->city->enum();
+        return view('admin.cities.index',compact('cities'));
     }
 
     /**
@@ -33,7 +33,7 @@ class MissController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cities.create-edit');
     }
 
     /**
@@ -44,7 +44,19 @@ class MissController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $city = $this->city->save($data);
+        $sessionData['tipo_mensaje'] = 'success';
+        $sessionData['mensaje'] = "Se ha guardado Satisfactoriamente el cantón";
+
+        if ($city) {
+            return redirect('/admin/cities/'.$city->id.'/edit')->with($sessionData);
+        }
+
+        $sessionData['tipo_mensaje'] = 'error';
+        $sessionData['mensaje'] = "No se ha podido guardar el cantón";
+
+        return back()->with($sessionData);
     }
 
     /**
@@ -66,7 +78,8 @@ class MissController extends Controller
      */
     public function edit($id)
     {
-        //
+        $city = $this->city->find($id);
+        return view('admin.cities.create-edit',compact('city'));
     }
 
     /**
@@ -78,7 +91,19 @@ class MissController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $city = $this->city->edit($id, $request->all());
+
+        $sessionData['tipo_mensaje'] = 'success';
+        $sessionData['mensaje'] = "Se ha guardado Satisfactoriamente el cantón";
+
+        if ($city) {
+            return redirect('/admin/cities/'.$city->id.'/edit')->with($sessionData);
+        }
+
+        $sessionData['tipo_mensaje'] = 'error';
+        $sessionData['mensaje'] = "No se ha podido actualizar el cantón";
+
+        return back()->with($sessionData);
     }
 
     /**
