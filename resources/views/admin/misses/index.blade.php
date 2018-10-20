@@ -22,6 +22,15 @@
 		   				<tr>
 		   					<td>{{$misses->city}}</td>
 		   					<td>{{$misses->name}} {{$misses->last_name}}</td>
+		   					<td>{{$misses->state}}</td>
+		   					<td>
+		   						<a class="btn btn-primary btn-sm" href="{{ url('admin/cities/'.$city->id.'/edit') }}">Editar</a>
+			   					<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>
+			   					<form action="{{ url('admin/cities/'.$city->id) }}" style="display: none" method="POST">
+		   							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+     								<input type="hidden" name="_method" value="DELETE">
+			   					</form>
+		   					</td>
 		   				</tr>
 	   				@else
 	   					<tr>

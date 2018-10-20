@@ -3,6 +3,8 @@ namespace  App\RepositoryInterface;
 
 interface  CityRepositoryInterface extends CoreRepositoryInterface {
 	
+	public function getActives();
+	
 	// public function paginate();
 
 	// public function uploadApplicantPhoto($photo);

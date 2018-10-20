@@ -11,5 +11,11 @@ class Miss extends Model
     public $timestamps = false;
 
     protected $fillable = ['*'];
+
+
+    public function city()
+    {
+    	return $this->belongsTo('App\City','city_id');
+    }
   
 }

@@ -11,6 +11,12 @@ class CityRepository implements CityRepositoryInterface
 {
 
 
+	public function getActives()
+	{
+		return City::where('state',1)->get();
+	}
+
+	
 	public function enum($params = null)
 	{
 		return City::all();

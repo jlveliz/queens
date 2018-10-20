@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\RepositoryInterface\MissRepositoryInterface;
+use  App\RepositoryInterface\CityRepositoryInterface;
 
 class MissController extends Controller
 {
     
     private $miss;
+    private $city;
     
-    public function __construct(MissRepositoryInterface $miss)
+    public function __construct(MissRepositoryInterface $miss,CityRepositoryInterface $city)
     {
         $this->miss = $miss;
+        $this->city = $city;
     }
 
     /**
@@ -33,7 +36,8 @@ class MissController extends Controller
      */
     public function create()
     {
-        //
+        $cities = $this->city->getActives();
+        return view('admin.misses.create-edit',compact('cities'));
     }
 
     /**
