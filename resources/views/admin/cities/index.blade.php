@@ -8,11 +8,18 @@
 	   			Listado
 	   			<a class="pull-right btn btn-primary" href="{{ url('/admin/cities/create') }}" title="Crear Ciudad"><i class="fa fa-plus"></i> Crear</a>
 	   		</caption>
+	   		@if (Session::has('mensaje'))
+	   		    <div class="alert alert-dismissible @if(Session::get('tipo_mensaje') == 'success') alert-info  @endif @if(Session::get('tipo_mensaje') == 'error') alert-danger  @endif" role="alert">
+	   		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	   		          {{session('mensaje')}}
+	   		    </div>
+	   		    <div class="clearfix"></div>
+	   		@endif
 	   		<table class="table table-bordered">
 	   			<thead>
 	   				<tr>
-	   					<th class="text-center">Nombre</th>
-	   					<th class="text-center">Acción</th>
+	   					<th class="text-center col-md-10">Nombre</th>
+	   					<th class="text-center col-md-2">Acción</th>
 	   				</tr>
 	   			</thead>
 	   			<tbody>
@@ -21,8 +28,12 @@
 			   				<tr>
 			   					<td>{{$city->name}}</td>
 			   					<td>
-			   						<a href="">Editar</a>
-			   						<button type="button" class="delete-el">Eliminar</button>
+			   						<a class="btn btn-primary btn-sm" href="{{ url('admin/cities/'.$city->id.'/edit') }}">Editar</a>
+			   						<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>
+			   						<form action="{{ url('admin/cities/'.$city->id) }}" style="display: none" method="POST">
+			   							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+         								<input type="hidden" name="_method" value="DELETE">
+			   						</form>
 			   					</td>
 			   				</tr>
 	   					@endforeach

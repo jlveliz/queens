@@ -13,21 +13,23 @@
 	   		    <div class="clearfix"></div>
 	   		@endif
 
-	   		<form action="{{ url('admin/cities') }}" method="post">
+	   		<form action="@if(isset($city) && $city->id){{ url('admin/cities/'.$city->id) }}@else{{ url('admin/cities') }}@endif" method="post">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
+				@if (isset($city) && $city->id)
+					<input type="hidden" name="_method" value="PUT">
+				@endif
 				<div class="row">
 					<div class="form-group col-md-3 col-sm-3 col-xs-12 @if($errors->has('name')) has-error @endif">
 						<label class="control-label">Nombre </label>
-						<input type="text" class="form-control" name="name" value="@if(isset($city)) {{$city->name}} @else{{ old('name')}} @endif" autofocus>
+						<input type="text" class="form-control" name="name" value="@if(isset($city)){{$city->name}}@else{{old('name')}}@endif" autofocus>
 						@if ($errors->has('name')) <p class="help-block">{{ $errors->first('name') }}</p> @endif
 					</div>
 
 					<div class="form-group col-md-3 col-sm-3 col-xs-12 @if($errors->has('state')) has-error @endif">
 						<label class="control-label">Estado </label>
-							{{$city->state}}
 						<select class="form-control" name="state">
-							<option value="1" @if( (isset($city) && $city->state == '1' ) || (old('state') == 1) ) selected @endif>Activo</option>
-							<option value="0"  @if( (isset($city) && $city->state == '0' ) || (old('state') == 0) ) selected @endif>Inactivo</option>
+							<option value="1" @if( (isset($city) && $city->state == '1' ) || (old('state') == '1') ) selected @endif>Activo</option>
+							<option value="0"  @if( (isset($city) && $city->state == '0' ) || (old('state') == '0') ) selected @endif>Inactivo</option>
 						</select>
 						@if ($errors->has('state')) <p class="help-block">{{ $errors->first('state') }}</p> @endif
 					</div>

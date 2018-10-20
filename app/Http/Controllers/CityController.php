@@ -94,7 +94,7 @@ class CityController extends Controller
         $city = $this->city->edit($id, $request->all());
 
         $sessionData['tipo_mensaje'] = 'success';
-        $sessionData['mensaje'] = "Se ha guardado Satisfactoriamente el cantón";
+        $sessionData['mensaje'] = "Se ha actualizado Satisfactoriamente el cantón";
 
         if ($city) {
             return redirect('/admin/cities/'.$city->id.'/edit')->with($sessionData);
@@ -114,6 +114,15 @@ class CityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $removed = $this->city->remove($id);
+        if ($removed) {
+            $sessionData['tipo_mensaje'] = 'success';
+            $sessionData['mensaje'] = "Se ha eliminado satisfactoriamente el cantón";
+        } else {
+            $sessionData['tipo_mensaje'] = 'error';
+            $sessionData['mensaje'] = "No se ha podido eliminar el cantón";
+        }
+
+        return back()->with($sessionData);
     }
 }

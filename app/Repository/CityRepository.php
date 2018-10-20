@@ -36,11 +36,12 @@ class CityRepository implements CityRepositoryInterface
 		$city = $this->find($id);
 		if ($city) {
 			$city->fill($data);
-			if ($city = $city->save()) {
+			if ($saved = $city->update()) {
 				$cityId = $city->getKey();
 				return $this->find($cityId);
 			}
 		}
+		return false;
 	}
 
 	public function remove($id)
