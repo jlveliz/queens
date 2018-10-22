@@ -13,13 +13,13 @@ class CityRepository implements CityRepositoryInterface
 
 	public function getActives()
 	{
-		return City::where('state',1)->get();
+		return City::where('state',1)->orderBy('name','asc')->get();
 	}
 
 	
 	public function enum($params = null)
 	{
-		return City::all();
+		return City::orderBy('name','asc')->get();
 	}
 
 	public function find($id)

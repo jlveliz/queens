@@ -18,7 +18,8 @@
 	   		<table class="table table-bordered">
 	   			<thead>
 	   				<tr>
-	   					<th class="text-center col-md-10">Nombre</th>
+	   					<th class="text-center col-md-8">Nombre</th>
+	   					<th class="text-center col-md-2">Estado</th>
 	   					<th class="text-center col-md-2">Acción</th>
 	   				</tr>
 	   			</thead>
@@ -27,6 +28,7 @@
 	   					@foreach ($cities as $city)
 			   				<tr>
 			   					<td>{{$city->name}}</td>
+			   					<td>@if($city->state == 1) <b class="text-success">Activo</b> @else <b class="text-danger"> Inactivo</b> @endif</td>
 			   					<td>
 			   						<a class="btn btn-primary btn-sm" href="{{ url('admin/cities/'.$city->id.'/edit') }}">Editar</a>
 			   						<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>

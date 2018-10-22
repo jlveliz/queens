@@ -11,6 +11,7 @@
 	   		<table class="table table-bordered">
 	   			<thead>
 	   				<tr>
+	   					<th class="text-center">N°</th>
 	   					<th class="text-center">Cantón</th>
 	   					<th class="text-center">Nombre</th>
 	   					<th class="text-center">Estado</th>
@@ -19,8 +20,9 @@
 	   			</thead>
 	   			<tbody>
 	   				@if (count($misses) > 0)
-	   					@foreach ($misses as $miss)
+	   					@foreach ($misses as $idx =>  $miss)
 			   				<tr>
+			   					<td>{{ ($idx + 1) }}</td>
 			   					<td>{{$miss->city->name}}</td>
 			   					<td>{{$miss->name}} {{$miss->last_name}}</td>
 			   					<td>
