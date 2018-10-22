@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\RepositoryInterface\MissRepositoryInterface','App\Repository\MissRepository');
         $this->app->bind('App\RepositoryInterface\CityRepositoryInterface','App\Repository\CityRepository');
+        $this->app->bind('App\RepositoryInterface\EventRepositoryInterface','App\Repository\EventRepository');
         
     }
 }

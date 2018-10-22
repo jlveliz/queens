@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\RepositoryInterface\MissRepositoryInterface;
 use App\Miss;
+use Image;
 
 /**
  * 
@@ -24,8 +25,14 @@ class MissRepository implements MissRepositoryInterface
 	public function save($data)
 	{
 		$miss = new Miss();
+
+		if (array_key_exists('photos', $data)) {
+			$photos = $data['photos'];
+			$data['photos'] = $this->uploadPhoto($photos);
+		}
+
 		$miss->fill($data);
-		if ($miss = $miss->save()) {
+		if ($saved = $miss->save()) {
 			$missId = $miss->getKey();
 			return $this->find($missId);
 		}
@@ -35,8 +42,12 @@ class MissRepository implements MissRepositoryInterface
 	{
 		$miss = $this->find($id);
 		if ($miss) {
+			if (array_key_exists('photos', $data)) {
+				$photos = $data['photos'];
+				$data['photos'] = $this->uploadPhoto($photos);
+			}
 			$miss->fill($data);
-			if ($miss = $miss->save()) {
+			if ($saved = $miss->save()) {
 				$missId = $miss->getKey();
 				return $this->find($missId);
 			}
@@ -54,5 +65,30 @@ class MissRepository implements MissRepositoryInterface
 
 		}
 	}
+
+
+	public function uploadPhoto($photo)
+	{
+		if ($photo->isValid()) {
+			
+			$realPath = $photo->getRealPath();
+			$image = Image::make($realPath);
+			$isLandScape = true;
+			
+			$image->resize(509,682,function($constraint){
+				$constraint->aspectRatio();
+			});
+
+			$imageName = str_random().'.'. $photo->getClientOriginalExtension();
+			if($image->save($this->pathUplod().'/'.$imageName)){
+				return 'uploads/'.date('Y').'/'.$imageName;
+			}
+		}
+	}
+
+	private function pathUplod() {
+		return public_path().'/uploads/'.date('Y').'/';
+	}
+
 
 }

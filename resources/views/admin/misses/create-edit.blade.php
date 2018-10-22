@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
 <div class="row">
 	<div class="panel panel-default">
@@ -13,7 +14,7 @@
 	   		    <div class="clearfix"></div>
 	   		@endif
 
-	   		<form action="@if(isset($miss) && $miss->id){{ url('admin/misses/'.$miss->id) }}@else{{ url('admin/misses') }}@endif" method="post">
+	   		<form action="@if(isset($miss) && $miss->id){{ url('admin/misses/'.$miss->id) }}@else{{ url('admin/misses') }}@endif" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				@if (isset($miss) && $miss->id)
 					<input type="hidden" name="_method" value="PUT">
@@ -46,7 +47,7 @@
 						<label class="control-label">Edad</label>
 						<select class="form-control" name="age">
 							@for ($i = 15; $i < 30; $i++)
-								<option value="{{$i}}">{{$i}} Años</option>
+								<option value="{{$i}}" @if( (isset($miss) && $miss->age == $i) || ( old('age') == $i) ) selected @endif>{{$i}} Años</option>
 							@endfor
 						</select>
 						@if ($errors->has('age')) <p class="help-block">{{ $errors->first('age') }}</p> @endif
@@ -88,7 +89,7 @@
 				<div class="row">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 					<label class="control-label">Foto</label>
-					<input type="file" name="photos[]" id="photos" multiple accept="image/*">
+					<input type="file" name="photos" id="photos" multiple accept="image/*">
 					@if ($errors->has('photos')) <p class="help-block">{{ $errors->first('photos') }}</p> @endif
 				</div>
 				</div>
@@ -102,10 +103,38 @@
 			</form>
 	   </div>
 	</div>
-@endsection
+</div>
+@endsection()
 
 
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/bootstrap-file-input/fileinput.min.css') }}">
-@endsection
+@endsection()
+@section('js')
+<script src="{{ asset('js/bootstrap-file-input/fileinput.min.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+	$("#photos").fileinput({
+		language : 'es',
+		theme:'fa',
+		allowedFileTypes: ['image'],
+		showUpload: false,
+		minFileCount: 1,
+		maxFileCount: 3,
+		autoReplace:true,
+		overwriteInitial:false,
+		showUploadedThumbs: true,
+		initialPreviewAsData: true,
+		initialPreviewFileType: 'image',
+		showRemove: true,
+		@if (isset($miss))
+		initialPreview : [
+			'{{config('app.url').'/'.$miss->photos}}',
+		],
+		initialPreviewConfig: [
+    		{ caption : '{{$miss->photos}}', url: '{{asset('$miss->photos')}}', id: {{$miss->id}} }
+    	]
+		@endif
+	});
+</script>
+@endsection()

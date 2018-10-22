@@ -41,6 +41,7 @@
                         <li class="@if(Request::path() == 'admin') active @endif"><a href="{{ url('admin') }}">Tablero</a></li>
                         <li class="@if(Request::path() == 'admin/misses') active @endif"><a href="{{ url('admin/misses') }}">Candidatas</a></li>
                         <li class="@if(Request::path() == 'admin/cities') active @endif"><a href="{{ url('admin/cities') }}">Cantones</a></li>
+                        <li class="@if(Request::path() == 'admin/events') active @endif"><a href="{{ url('admin/events') }}">Eventos</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -88,7 +89,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-    @yield('js')
     <script src="{{ asset('js/backend.js') }}" type="text/javascript"></script>
+    @yield('js')
 </body>
 </html>

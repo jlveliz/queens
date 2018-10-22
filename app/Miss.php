@@ -8,9 +8,19 @@ class Miss extends Model
 {
     protected $table = 'miss';
 
-    public $timestamps = false;
-
-    protected $fillable = ['*'];
+    protected $fillable = [
+    	'name',
+    	'last_name',
+    	'age',
+    	'city_id',
+    	'height',
+    	'measurements',
+    	'activities',
+    	'hobbies',
+    	'photos',
+    	'semifinalist',
+    	'state'
+    ];
 
 
     public function city()

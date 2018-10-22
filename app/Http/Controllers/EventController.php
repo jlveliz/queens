@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use  App\RepositoryInterface\MissRepositoryInterface;
-use  App\RepositoryInterface\CityRepositoryInterface;
+use  App\RepositoryInterface\EventRepositoryInterface;
 
-class MissController extends Controller
+class EventController extends Controller
 {
     
-    private $miss;
-    private $city;
+    private $event;
     
-    public function __construct(MissRepositoryInterface $miss,CityRepositoryInterface $city)
+    public function __construct(EventRepositoryInterface $event)
     {
-        $this->miss = $miss;
-        $this->city = $city;
+        $this->event = $event;
     }
 
     /**
@@ -25,8 +22,8 @@ class MissController extends Controller
      */
     public function index()
     {
-        $misses = $this->miss->enum();
-        return view('admin.misses.index',compact('misses'));
+        $events = $this->event->enum();
+        return view('admin.events.index',compact('events'));
     }
 
     /**
@@ -36,8 +33,7 @@ class MissController extends Controller
      */
     public function create()
     {
-        $cities = $this->city->getActives();
-        return view('admin.misses.create-edit',compact('cities'));
+        return view('admin.events.create-edit');
     }
 
     /**
@@ -48,16 +44,16 @@ class MissController extends Controller
      */
     public function store(Request $request)
     {
-        $miss = $this->miss->save($request->all());
+        $event = $this->event->save($request->all());
         $sessionData['tipo_mensaje'] = 'success';
-        $sessionData['mensaje'] = "Se ha guardado Satisfactoriamente la candidata";
+        $sessionData['mensaje'] = "Se ha guardado Satisfactoriamente el evento";
 
-        if ($miss) {
-            return redirect('/admin/misses/'.$miss->id.'/edit')->with($sessionData);
+        if ($event) {
+            return redirect('/admin/events/'.$event->id.'/edit')->with($sessionData);
         }
 
         $sessionData['tipo_mensaje'] = 'error';
-        $sessionData['mensaje'] = "No se ha podido guardar la candidata";
+        $sessionData['mensaje'] = "No se ha podido guardar el evento";
         return back()->with($sessionData);
 
 
@@ -82,9 +78,8 @@ class MissController extends Controller
      */
     public function edit($id)
     {
-        $miss = $this->miss->find($id);
-        $cities = $this->city->getActives();
-        return view('admin.misses.create-edit',compact('miss','cities'));
+        $event = $this->event->find($id);
+        return view('admin.events.create-edit',compact('event'));
     }
 
     /**
@@ -96,17 +91,17 @@ class MissController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $miss = $this->miss->edit($id, $request->all());
+        $event = $this->event->edit($id, $request->all());
 
         $sessionData['tipo_mensaje'] = 'success';
-        $sessionData['mensaje'] = "Se ha actualizado Satisfactoriamente la candidata";
+        $sessionData['mensaje'] = "Se ha actualizado Satisfactoriamente el evento";
 
-        if ($miss) {
-            return redirect('/admin/misses/'.$miss->id.'/edit')->with($sessionData);
+        if ($event) {
+            return redirect('/admin/events/'.$event->id.'/edit')->with($sessionData);
         }
 
         $sessionData['tipo_mensaje'] = 'error';
-        $sessionData['mensaje'] = "No se ha podido actualizar la candidata";
+        $sessionData['mensaje'] = "No se ha podido actualizar el evento";
 
         return back()->with($sessionData);
     }
@@ -119,13 +114,13 @@ class MissController extends Controller
      */
     public function destroy($id)
     {
-        $removed = $this->miss->remove($id);
+        $removed = $this->event->remove($id);
         if ($removed) {
             $sessionData['tipo_mensaje'] = 'success';
-            $sessionData['mensaje'] = "Se ha eliminado satisfactoriamente la candidata";
+            $sessionData['mensaje'] = "Se ha eliminado satisfactoriamente el evento";
         } else {
             $sessionData['tipo_mensaje'] = 'error';
-            $sessionData['mensaje'] = "No se ha podido eliminar la candidata";
+            $sessionData['mensaje'] = "No se ha podido eliminar el evento";
         }
 
         return back()->with($sessionData);

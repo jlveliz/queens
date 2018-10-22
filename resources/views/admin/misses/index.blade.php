@@ -19,22 +19,30 @@
 	   			</thead>
 	   			<tbody>
 	   				@if (count($misses) > 0)
-		   				<tr>
-		   					<td>{{$misses->city}}</td>
-		   					<td>{{$misses->name}} {{$misses->last_name}}</td>
-		   					<td>{{$misses->state}}</td>
-		   					<td>
-		   						<a class="btn btn-primary btn-sm" href="{{ url('admin/cities/'.$city->id.'/edit') }}">Editar</a>
-			   					<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>
-			   					<form action="{{ url('admin/cities/'.$city->id) }}" style="display: none" method="POST">
-		   							<input type="hidden" name="_token" value="{{ csrf_token() }}">
-     								<input type="hidden" name="_method" value="DELETE">
-			   					</form>
-		   					</td>
-		   				</tr>
+	   					@foreach ($misses as $miss)
+			   				<tr>
+			   					<td>{{$miss->city->name}}</td>
+			   					<td>{{$miss->name}} {{$miss->last_name}}</td>
+			   					<td>
+			   						@if($miss->state)
+			   						Activo
+			   						@else
+			   						Inactivo
+			   						@endif
+			   					</td>
+			   					<td>
+			   						<a class="btn btn-primary btn-sm" href="{{ url('admin/misses/'.$miss->id.'/edit') }}">Editar</a>
+				   					<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>
+				   					<form action="{{ url('admin/misses/'.$miss->id) }}" style="display: none" method="POST">
+			   							<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	     								<input type="hidden" name="_method" value="DELETE">
+				   					</form>
+			   					</td>
+			   				</tr>
+	   					@endforeach
 	   				@else
 	   					<tr>
-	   						<td colspan="3" rowspan="" headers=""><p class="text-muted text-center">No existen Candidatas a Mostrar</p> </td>
+	   						<td colspan="4" rowspan="" headers=""><p class="text-muted text-center">No existen Candidatas a Mostrar</p> </td>
 	   					</tr>
 	   				@endif
 	   			</tbody>
