@@ -17,70 +17,58 @@
 
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-4 text-center">
-                        @can('vote',Auth::user())
-                        <a href="{{ route('vote',['evento'=>'traje_tipico']) }}" title="" class="event-icon">
-                            <img src="{{ asset('images/traje_tipico.png') }}" alt="">
-                            <span>Traje Típico</span>
-                        </a>
-                        @endcan
 
-                        @cannot('vote',Auth::user())
-                        <a href="" title="" class="event-icon disabled">
-                            <img src="{{ asset('images/traje_tipico.png') }}" alt="">
-                            <span>Traje Típico</span>
+                    
+                    <div class="col-md-4 col-md-offset-4 text-center">
+                        <a href="@can('vote'){{ route('vote',['evento'=>$current_event->generateSlug()]) }}@endcan @cannot('vote')#@endcannot" title="" class="event-icon  @cannot('vote') disabled @endcannot">
+                            @can('vote')
+                                <img src="{{ asset($current_event->getImg()) }}" alt="">
+                            @endcan
+                            @cannot('vote')
+                                <img src="{{ asset($current_event->getImg(true)) }}" alt="">
+                            @endcannot
+                            <span>{{$current_event->name}}</span>
                         </a>
-                        @endcannot
                     </div>
-
+{{-- 
+                    @can('vote',$current_event)
                     <div class="col-md-4 text-center">
-                        @can('vote',Auth::user())
                         <a href="{{ route('vote',['evento'=>'vestido_noche']) }}" title="" class="event-icon">
                             <img src="{{ asset('images/vestido_noche.png') }}" alt="">
                             <span>Traje de Noche</span>
                         </a>
-                        @endcan
-
-                        @cannot('vote',Auth::user())
-                        <a href="#" title="" class="event-icon disabled">
-                            <img src="{{ asset('images/vestido_noche.png') }}" alt="">
-                            <span>Traje de Noche</span>
-                        </a>
-                        @endcannot
                     </div>
+                    @endcan
 
+                    @can('vote',$current_event)
                     <div class="col-md-4 text-center">
-                        @can('vote',Auth::user())
                         <a href="{{ route('vote',['evento'=>'vestido_traje_banio']) }}" title="" class="event-icon">
                             <img src="{{ asset('images/vestido_traje_banio.png') }}" alt="">
                             <span>Traje de Baño</span>
                         </a>
-                         @endcan
-
-                        @cannot('vote',Auth::user())
-                        <a href="#" title="" class="event-icon disabled">
-                            <img src="{{ asset('images/vestido_traje_banio.png') }}" alt="">
-                            <span>Traje de Baño</span>
-                        </a>
-                         @endcannot
                     </div>
-                </div>
+                    @endcan
 
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <a href="@can('vote',Auth::user()) {{ route('vote',['evento'=>'ronda_preguntas']) }} @endcan @cannot('vote',Auth::user()) # @endcannot" title="" class="event-icon @cannot('vote',Auth::user()) disabled @endcannot">
-                             <img src="{{ asset('images/ronda_preguntas.png') }}" alt="">
+                    @can('vote',$current_event)
+                    <div class="col-md-4 text-center">
+                        <a href="{{ route('vote',['evento'=>'ronda_preguntas']) }}" title="" class="event-icon">
+                            <img src="{{ asset('images/ronda_preguntas.png') }}" alt="">
                             <span>Ronda de Preguntas</span>
                         </a>
                     </div>
+                    @endcan
 
-                    <div class="col-md-6 text-center">
-                        <a href="@can('vote',Auth::user()) {{ route('vote',['evento'=>'ronda_preguntas']) }} @endcan @cannot('vote',Auth::user()) # @endcannot" title="" class="event-icon @cannot('vote',Auth::user()) disabled @endcannot">
-                             <img src="{{ asset('images/ronda_preguntas.png') }}" alt="">
+                    @can('vote',$current_event) 
+                    <div class="col-md-4 text-center">
+                        <a href="{{ route('vote',['evento'=>'ronda_preguntas']) }}" title="" class="event-icon">
+                            <img src="{{ asset('images/ronda_preguntas.png') }}" alt="">
                             <span>Desempate</span>
                         </a>
                     </div>
+                    @endcan --}} 
                 </div>
+
+                
             </div>
         </div>
     </div>

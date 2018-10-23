@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\RepositoryInterface\MissRepositoryInterface;
 
 class HomeController extends Controller
 {
