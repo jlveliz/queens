@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $eventModel = new Event();
-         view()->share('current_event',$eventModel->getCurrent());
+        view()->share('current_event',$eventModel->getCurrent());
 
     }
 

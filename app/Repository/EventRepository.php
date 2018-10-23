@@ -18,8 +18,14 @@ class EventRepository implements EventRepositoryInterface
 
 	public function getCurrentName()
 	{
+		return $this->getCurrent() ? $this->getCurrent()->name : 'N/A';
+	}
+	
+
+	public function getCurrent()
+	{
 		$eventModel = new Event();
-		return $eventModel->getCurrent() ? $eventModel->getCurrent()->name : 'N/A';
+		return $eventModel->getCurrent();
 	}
 
 	

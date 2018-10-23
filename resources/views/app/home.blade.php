@@ -16,9 +16,7 @@
             </div>
 
             <div class="panel-body">
-                <div class="row">
-
-                    
+                <div class="row">                    
                     <div class="col-md-4 col-md-offset-4 text-center">
                         <a href="@can('vote'){{ route('vote',['evento'=>$current_event->generateSlug()]) }}@endcan @cannot('vote')#@endcannot" title="" class="event-icon  @cannot('vote') disabled @endcannot">
                             @can('vote')

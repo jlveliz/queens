@@ -113,7 +113,7 @@ hr {
 }
 
 .inner-container img {
-    width: 20%!important;
+    width: 15%!important;
 }
 
 .inner-container h1 {
@@ -122,6 +122,12 @@ hr {
     text-align: center;
     font-weight: bolder;
     border-bottom: 1px solid  #36446B; 
+    font-size: 30px;
+}
+
+.img-block {
+    display: block;
+    margin: 0 auto
 }
 
 
@@ -417,9 +423,10 @@ hr {
 
 .btn-vote {
     color: #fff;
-    background-color: #ddcc33;
-    /*border-color: #aa9335;*/
-    /*border-radius: 2px;*/
+    background-color: #fe7c34;
+    border-color: #aa9335;
+    border-radius: 2px;
+    margin-top: 5px;
 }
 
 .btn-vote:hover {
@@ -469,4 +476,18 @@ hr {
 
 .miss-item {
     margin-bottom: 60px;
+}
+
+.data-section {
+    margin-top: 20px;
+    padding: 10px;
+    width: 90%;
+    background: #36446b;
+    border-radius: 5px;
+    color: #ffffff;
+    border: 1px solid #ff7200;
+}
+
+#puntaje>option:focus, {
+    font-size: 40px;
 }

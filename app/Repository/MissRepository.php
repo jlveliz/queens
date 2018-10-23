@@ -14,7 +14,7 @@ class MissRepository implements MissRepositoryInterface
 
 	public function paginate()
 	{
-		return Miss::leftJoin('city','miss.city_id','=','city.id')->where('miss.state',1)->orderBy('city.name','asc')->paginate(1);
+		return Miss::select('miss.*')->leftJoin('city','miss.city_id','=','city.id')->where('miss.state',1)->orderBy('city.name','asc')->paginate(1);
 	}
 
 	public function enum($params = null)
