@@ -42,6 +42,16 @@
 						</select>
 						@if ($errors->has('role')) <p class="help-block">{{ $errors->first('role') }}</p> @endif
 					</div>
+
+					<div class="form-group col-md-2 col-sm-2 col-xs-12 @if($errors->has('state')) has-error @endif">
+						<label class="control-label">Estado</label>
+						<select class="form-control" name="state">
+							<option value="">Seleccione</option>
+							<option value="1" @if( (isset($user) && $user->state == '1') || old('state') == '1' ) selected @endif>Activo</option>
+							<option value="0" @if( (isset($user) && $user->state == '0') || old('role') == '0' ) selected @endif>Inactivo</option>
+						</select>
+						@if ($errors->has('state')) <p class="help-block">{{ $errors->first('state') }}</p> @endif
+					</div>
 				</div>
 				<hr>
 				<div class="row">

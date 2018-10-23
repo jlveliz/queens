@@ -5,6 +5,6 @@ interface  EventRepositoryInterface extends CoreRepositoryInterface {
 	
 	public function getActives();
 
-	public function getCurrent();
+	public function getCurrentName();
 	
 }

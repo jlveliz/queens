@@ -14,6 +14,7 @@
 	   					<th class="text-center col-md-1">N°</th>
 	   					<th class="text-center col-md-4">Usuario</th>
 	   					<th class="text-center col-md-4">Rol</th>
+	   					<th class="text-center col-md-1">Estado</th>
 	   					<th class="text-center col-md-2">Acción</th>
 	   				</tr>
 	   			</thead>
@@ -24,6 +25,12 @@
 			   					<td>{{ ($idx + 1) }}</td>
 			   					<td>{{$user->username}}</td>
 			   					<td>{{$user->role}}</td>
+			   					<td>
+			   						@if($user->state)
+			   						<b class="text-success">Activo</b>
+			   						@else
+			   						<b class="text-danger">Inactivo</b>
+			   						@endif</td>
 			   					<td>
 			   						<a class="btn btn-primary btn-sm" href="{{ url('admin/users/'.$user->id.'/edit') }}">Editar</a>
 				   					<button class="btn btn-danger btn-sm delete-el" type="button" class="">Eliminar</button>

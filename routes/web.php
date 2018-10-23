@@ -20,6 +20,7 @@ Route::get('/vote/{event?}', 'HomeController@vote')->name('vote');
 
 Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::get('/','AdminController@index');
+	Route::post('update-event','AdminController@updateCurrentEvent')->name('set-current-event');
 	Route::resource('/misses', 'MissController');
 	Route::resource('/cities', 'CityController');
 	Route::resource('/events', 'EventController');

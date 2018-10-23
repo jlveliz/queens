@@ -16,10 +16,10 @@ class EventRepository implements EventRepositoryInterface
 		return Event::where('state',1)->get();
 	}
 
-	public function getCurrent()
+	public function getCurrentName()
 	{
 		$eventModel = new Event();
-		return $eventModel->getCurrent();
+		return $eventModel->getCurrent() ? $eventModel->getCurrent()->name : 'N/A';
 	}
 
 	
@@ -66,6 +66,27 @@ class EventRepository implements EventRepositoryInterface
 			return false;
 
 		}
+	}
+
+
+	public function setCurrentEvent($data)
+	{
+		if (array_key_exists('is_current', $data)) {
+			//update other events
+			$othEvent = Event::where('is_current',1)->first();
+			if ($othEvent) {
+				$othEvent->is_current = 0;
+				$othEvent->update();
+			}
+
+			$eventUpdate = $this->find($data['event_id']);
+			if ($eventUpdate) {
+				$eventUpdate->is_current = $data['is_current'];
+				if($eventUpdate->update()) return true;
+				return false;
+			}
+		} 
+			
 	}
 
 }

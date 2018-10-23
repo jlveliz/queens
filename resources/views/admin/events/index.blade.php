@@ -30,9 +30,9 @@
 			   					<td>{{$event->name}}</td>
 			   					<td>
 			   						@if($event->state == 1)
-			   						Activo
+			   						<b class="text-success">Activo</b>
 			   						@else
-			   						Inactivo
+			   						<b class="text-danger">Inactivo</b>
 			   						@endif
 			   					</td>
 			   					<td>
