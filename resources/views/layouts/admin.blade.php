@@ -42,6 +42,7 @@
                         <li class="@if(Request::path() == 'admin/misses') active @endif"><a href="{{ url('admin/misses') }}">Candidatas</a></li>
                         <li class="@if(Request::path() == 'admin/cities') active @endif"><a href="{{ url('admin/cities') }}">Cantones</a></li>
                         <li class="@if(Request::path() == 'admin/events') active @endif"><a href="{{ url('admin/events') }}">Eventos</a></li>
+                        <li class="@if(Request::path() == 'admin/users') active @endif"><a href="{{ url('admin/users') }}">Usuarios</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

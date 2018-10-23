@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'role', 'password',
     ];
 
     /**
@@ -29,4 +29,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    
+
+    public function setUsernameAttribute($value)
+    {
+        $this->attributes['username']  = strtoupper($value);
+    }
 }

@@ -23,4 +23,5 @@ Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::resource('/misses', 'MissController');
 	Route::resource('/cities', 'CityController');
 	Route::resource('/events', 'EventController');
+	Route::resource('/users', 'UserController');
 });
