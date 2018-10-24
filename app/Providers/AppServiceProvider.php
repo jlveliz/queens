@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('App\RepositoryInterface\CityRepositoryInterface','App\Repository\CityRepository');
         $this->app->bind('App\RepositoryInterface\EventRepositoryInterface','App\Repository\EventRepository');
         $this->app->bind('App\RepositoryInterface\UserRepositoryInterface','App\Repository\UserRepository');
+        $this->app->bind('App\RepositoryInterface\ScoreRepositoryInterface','App\Repository\ScoreRepository');
         
     }
 }

@@ -35,7 +35,7 @@ class HomeController extends Controller
     }
 
 
-    public function vote($eventType = '')
+    public function vote($eventType = '', Request $request)
     {
         if (!$eventType) {
             return redirect('home');
@@ -46,14 +46,14 @@ class HomeController extends Controller
         if($eventType !=  $this->event->getCurrent()->generateSlug())
             return redirect('home');
 
-        $misses = $this->miss->paginate();
 
+        $misses = $this->miss->paginate();
         return view('app.show',compact('misses'));
     }
 
 
-    public function dovote(Request $request)
+    public function thanks()
     {
-        dd($request);
+        return view('app.thanks');
     }
 }

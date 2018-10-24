@@ -17,7 +17,8 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/vote/{event?}', 'HomeController@vote')->name('vote');
-Route::post('/vote', 'HomeController@dovote')->name('dovote');
+Route::get('/thanks', 'HomeController@thanks')->name('thanks');
+Route::resource('/scores', 'ScoreController',['only' => ['store','update'] ]);
 
 Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::get('/','AdminController@index');
