@@ -9,16 +9,16 @@ class Score extends Model
     protected $table = 'score';
 
     protected $fillable = [
-    	'miss_id',
+    	'city_id',
     	'user_id',
     	'event_id',
     	'value'
     ];
 
 
-    public function miss()
+    public function city()
     {
-    	return $this->belongsTo('App\Miss','miss_id');
+    	return $this->belongsTo('App\City','city_id');
     }
 
     public function user()
@@ -34,7 +34,7 @@ class Score extends Model
 
     public static function get($eventId, $missId, $userId)
     {
-       $vote = self::where('event_id',$eventId)->where('miss_id',$missId)->where('user_id',$userId)->first();
+       $vote = self::where('event_id',$eventId)->where('city_id',$missId)->where('user_id',$userId)->first();
        if ($vote) {
            return $vote->value;
        }
@@ -43,7 +43,7 @@ class Score extends Model
 
     public static function getId($eventId, $missId, $userId)
     {
-       $vote = self::where('event_id',$eventId)->where('miss_id',$missId)->where('user_id',$userId)->first();
+       $vote = self::where('event_id',$eventId)->where('city_id',$missId)->where('user_id',$userId)->first();
        if ($vote) {
            return $vote->id;
        }

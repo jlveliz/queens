@@ -36,7 +36,7 @@
 		        		<h3 class="text-center"><b>Puntaje</b></h3>
 		        		<input type="hidden" name="event_id" value="{{$current_event->id}}">
 		        		<input type="hidden" name="user_id" value="{{Auth::id()}}">
-		        		<input type="hidden" name="miss_id" value="{{$miss->id}}">
+		        		<input type="hidden" name="city_id" value="{{$miss->city->id}}">
 		        		<input type="hidden" name="current_page" value="@if(Request::has('page')) {{Request::get('page')}}@else 1 @endif">
 		        		<select name="value" class="form-control" id="puntaje">
 		        			@for ($i = 0; $i <=10 ; $i++)
