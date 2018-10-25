@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         $this->attributes['username']  = strtoupper($value);
     }
+
+    public function getJudges()
+    {
+        return  $this->where('role','juez')->where('state',1)->get();
+    }
 }

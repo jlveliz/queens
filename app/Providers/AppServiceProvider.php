@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Event;
+use App\User;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $eventModel = new Event();
+
         view()->share('current_event',$eventModel->getCurrent());
+
+        view()->share('judges',(new User())->getJudges());
 
     }
 

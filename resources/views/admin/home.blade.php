@@ -34,18 +34,34 @@
 
 <div class="row">
 	@foreach ($events as $event)
-		<div class="col-md-6">
+		
+		<div class="col-md-12">
 			<h4><b>{{$event->name}}</b></h4>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>header</th>
+						<th>Cantón</th>
+						@foreach ($judges as $judge)
+						<th>{{$judge->username}}</th>
+						@endforeach
+						<th>Sumatoria</th>
+						<th>Promedio</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>data</td>
-					</tr>
+					@foreach ($event->getScore() as $key =>  $score)
+						<tr>
+							<td>{{$score->name}}</td>
+							<td>{{$score->juez1}}</td>
+							<td>{{$score->juez2}}</td>
+							<td>{{$score->juez3}}</td>
+							<td>{{$score->juez4}}</td>
+							<td>{{$score->juez5}}</td>
+							<td>{{$score->juez6}}</td>
+							<td>{{$score->sumatoria}}</td>
+							<td>{{$score->promedio}}</td>
+						</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>

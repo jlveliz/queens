@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use DB;
 
 class Event extends Model
 {
@@ -60,6 +62,73 @@ class Event extends Model
         }
 
         return $img;
+    }
+
+
+    public function getScore()
+    {
+        $judges = (new User())->getJudges();
+        $numJudges = count($judges->toArray());
+        $idJudges = [];
+        
+        foreach($judges as $key =>  $judge){
+            $idJudges[$key] = $judge->id;
+        }
+       
+
+
+        $sql = "SELECT city.`name` ";
+        //sum cada juez
+        for ($i=0; $i < $numJudges ; $i++) { 
+            $sql.= ", IFNULL(juez".($i+1).".`sum_score`, 0) AS juez".($i+1)." ";
+        }
+        //sumatoria
+        $sql.= ", (";
+        for ($i=0; $i < $numJudges ; $i++) { 
+            $sql.= " juez".($i+1).".sum_score ";
+            if (($i+1) < $numJudges) {
+               $sql.="+";
+            }
+        }
+        $sql.= ") sumatoria";
+
+
+        //promedio
+        $sql.= ", ROUND((";
+        for ($i=0; $i < $numJudges ; $i++) { 
+            $sql.= " juez".($i+1).".sum_score ";
+            if (($i+1) < $numJudges) {
+               $sql.="+";
+            }
+        }
+        $sql.= ") / ".$numJudges.", 2)  promedio";
+
+
+        $sql.= " FROM city,";
+        
+
+        //add froms
+        for ($i=0; $i < $numJudges ; $i++) { 
+            $sql.= "( SELECT score.city_id, SUM(score.`value`) sum_score FROM score WHERE score.user_id = ".$idJudges[$i]."  and score.event_id = ".$this->id." GROUP BY score.city_id ) juez".($i+1)." ";
+            if (($i+1) < $numJudges) {
+               $sql.=",";
+            }
+        }
+
+        //add wheres
+        $sql.= " WHERE ";
+        for ($i=0; $i < $numJudges ; $i++) { 
+            $sql.= " city.id = juez".($i+1).".city_id ";
+            if (($i+1) < $numJudges) {
+               $sql.="AND";
+            }
+        }
+
+        $sql.= "ORDER BY city.`name` ASC";
+
+
+        return $dataEvent =  DB::select(DB::raw($sql));
+        
     }
   
 }

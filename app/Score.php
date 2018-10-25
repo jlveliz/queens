@@ -32,18 +32,19 @@ class Score extends Model
     }
 
 
-    public static function get($eventId, $missId, $userId)
+    public static function get($eventId, $cityId, $userId)
     {
-       $vote = self::where('event_id',$eventId)->where('city_id',$missId)->where('user_id',$userId)->first();
+       $vote = self::where('event_id',$eventId)->where('city_id',$cityId)->where('user_id',$userId)->first();
        if ($vote) {
            return $vote->value;
        }
        return false;
     }
 
-    public static function getId($eventId, $missId, $userId)
+    public static function getId($eventId, $cityId, $userId)
     {
-       $vote = self::where('event_id',$eventId)->where('city_id',$missId)->where('user_id',$userId)->first();
+      
+       $vote = self::where('event_id',$eventId)->where('city_id',$cityId)->where('user_id',$userId)->first();
        if ($vote) {
            return $vote->id;
        }
