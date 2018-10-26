@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RepositoryInterface\EventRepositoryInterface;
+use App\RepositoryInterface\ScoreRepositoryInterface;
 
 class AdminController extends Controller
 {
     
     protected $event;
+    protected $score;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(EventRepositoryInterface $event)
+    public function __construct(EventRepositoryInterface $event, ScoreRepositoryInterface $score)
     {
         $this->middleware('admin');
         $this->event = $event;
+        $this->score = $score;
     }
 
     /**
@@ -51,5 +54,15 @@ class AdminController extends Controller
         }
 
         return back()->with($sessionData);
+    }
+
+    public function reset(Request $request)
+    {
+        $this->score->reset();
+
+        $sessionData['tipo_mensaje'] = 'success';
+        $sessionData['mensaje'] = "Se ha Reinicializado los puntos Satisfactoriamente";
+        return back()->with($sessionData);
+        
     }
 }

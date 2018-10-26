@@ -3,7 +3,7 @@ namespace App\Repository;
 
 use App\RepositoryInterface\ScoreRepositoryInterface;
 use App\Score;
-
+use DB;
 /**
  * 
  */
@@ -53,6 +53,21 @@ class ScoreRepository implements ScoreRepositoryInterface
 			return false;
 
 		}
+	}
+
+
+	public function reset()
+	{
+		DB::table('score')->delete();
+		
+		$sql = "INSERT INTO score (city_id,user_id,event_id,`value`) (SELECT a.city_id,b.id,c.id,0  FROM (SELECT city_id FROM miss WHERE state = 1) AS a, 
+	     (SELECT id FROM `user` WHERE role = 'juez' AND state = 1) AS b, 
+	     (SELECT id FROM `event` WHERE `event`.state = 1) AS c);";
+		
+		DB::select(DB::raw($sql));
+		
+		
+		return true;
 	}
 
 }

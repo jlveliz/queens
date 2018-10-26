@@ -27,4 +27,5 @@ Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::resource('/cities', 'CityController');
 	Route::resource('/events', 'EventController');
 	Route::resource('/users', 'UserController');
+	Route::post('reset','AdminController@reset')->name('reset');
 });

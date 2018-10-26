@@ -20,3 +20,16 @@ nav
 .no-padding-left {
     padding-left: 0px !important
 }
+
+
+.table {
+	font-size: 10px;
+	padding: 2px;
+	margin: 2px
+}
+
+.table td, 
+.table th {
+	padding: 2px!important;
+	margin: 2px!important
+}
