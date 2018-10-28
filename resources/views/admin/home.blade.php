@@ -154,9 +154,42 @@
 
 		<div role="tabpanel" class="tab-pane active" id="finalResult">
 			<h1>Resultado Final</h1>
-			@foreach (App\Score::getFullScore() as $element)
-				
-			@endforeach
+			<table class="table table-bordered">
+				<thead>
+						<tr>
+							<th></th>
+						@foreach ($events as $event)
+							<th colspan="8">
+								{{ $event->name }}
+							</th>
+						@endforeach
+						</tr>
+						<tr>
+							<th></th>
+							@for ($i = 0; $i < count($events) ; $i++)
+								@foreach ($judges as $judge)
+									<th> {{ $judge->username }} </th>
+								@endforeach
+								<th>Sumatoria</th>
+								<th>Promedio</th>
+								@if (($i +1 ) == 3))
+									<th>Semifinal</th>
+								@endif
+							@endfor
+						</tr>
+				</thead>
+				<tbody>
+					@foreach (App\Score::getFullScore() as $element)
+						<tr>
+							<td>{{ $element->canton }}</td>
+							{{-- TODO  CORRER LOS EVENTOS --}}
+							{{-- @for ($i = 0; $i < counts() ; $i++) --}}
+								{{-- expr --}}
+							{{-- @endfor --}}
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

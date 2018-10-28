@@ -152,12 +152,17 @@ class Score extends Model
       
       //events
       $eventRepo = (new EventRepository())->getActives();
-      $numEvents = count($eventRepo->toArray());
-      $idEvents = [];
+      $numAllEvents = count($eventRepo->toArray());
+      
+      $eventsNormalId = [];
+      $rondaPreguntasId = null;
       foreach ($eventRepo as $key => $event) {
-          $idEvents[$key] =  $event->id;
+          if ($event->generateSlug() != "ronda-de-preguntas") {
+            $eventsNormalId[$key] = $event->id;
+          }else {
+            $rondaPreguntasId = $event->id;
+          }
       }
-
 
       //jueces
       $judges = (new User())->getJudges();
@@ -168,97 +173,179 @@ class Score extends Model
         $idJudges[$key] = $judge->id;
       }
 
-      $sql = "SELECT city.`name` ";
-        
-        //events
-        for ($i=0; $i < $numEvents ; $i++) { 
-          //juez
-          for ($j=0; $j < $numJudges ; $j++) { 
-              $sql.= ", IFNULL(juez_".($j+1)."_event_".($i+1).".`sum_score`, 0) AS juez_".($j+1)."_event_".($i+1)."";
-          }
+      $sql = "SELECT city.name as canton, ";
 
-          $sql.= ", (";
-          for ($j=0; $j < $numJudges ; $j++) { 
-              $sql.= " juez_".($j+1)."_event_".($i+1).".sum_score ";
-              if (($j+1) < $numJudges) {
-                 $sql.="+";
-              }
-          }
-          $sql.= ") sumatoria_event_".($i+1);
-
-          //promedio
-          $sql.= ", ROUND((";
-          for ($j=0; $j < $numJudges ; $j++) { 
-              $sql.= " juez_".($j+1)."_event_".($i+1).".sum_score ";
-              if (($j+1) < $numJudges) {
-                 $sql.="+";
-              }
-          }
-          $sql.= ") / ".$numJudges.", 2)  promedio_event_".($i+1);
-
-        }
-
-        $sql.= "(";
-        for ($i=0; $i < $numEvents ; $i++) { 
-            $sql.= "sumatoria_event_".$i."";
-            if (($i+1) < $numEvents) {
-              $sql.="+";
+      for ($i=0; $i < count($eventsNormalId) ; $i++) { 
+          
+          for ($j=0; $j < $numJudges; $j++) { 
+            $sql.= "ju".($j+1)."ev".($i +1).".scoreval score_ju_".($j+1)."_event".($i+1);
+            if (($j+1) < $eventsNormalId) {
+              $sql.=", ";
             }
-        }
-
-        $sql.=") sumatoria_total, ";
-
-        $sql.= "ROUND((";
-        for ($i=0; $i < $numEvents ; $i++) { 
-            $sql.= "sumatoria_event_".$i."";
-            if (($i+1) < $numEvents) {
-              $sql.="+";
-            }
-        }
-
-        $sql.=") sumatoria_total, "
-
-        $sql.= " FROM city, ";
-
-        
-        //add froms
-        //events
-        for ($i=0; $i < $numEvents ; $i++) { 
-          //judges
-          for ($j=0; $j < $numJudges ; $j++) { 
-              $sql.= "( SELECT score.city_id, SUM(score.`value`) sum_score FROM score WHERE score.user_id = ".$idJudges[$j]."  and score.event_id = ".$idEvents[$i]." GROUP BY score.city_id ) juez_".($j+1)."_event_".($i+1)." ";
-              if (($j+1) < $numJudges) {
-                 $sql.=",";
-              }
-          }
-
-          if (($i+1) < $numEvents) {
-              $sql.=",";
-          }
-        }
-
-        
-
-         //add wheres
-        $sql.= " WHERE ";
-
-        for ($i=0; $i < $numEvents ; $i++) {
-          for ($j=0; $j < $numJudges ; $j++) { 
-              $sql.= " city.id = juez_".($j+1)."_event_".($i+1).".city_id ";
-              if (($j+1) < $numJudges) {
-                $sql.="AND";
-              }
           }
           
-          if (($i+1) < $numEvents) {
-                $sql.="AND";
+          // if (($i+1) < count($eventsNormalId)) {
+          //   $sql.=", ";
+          // }
+
+          //sumatorios
+          $sql.=" ( ";
+          for ($j=0; $j < $numJudges; $j++) { 
+            $sql.= "ju".($j+1)."ev".($i + 1).".scoreval";
+            if (($j+1) < $numJudges) {
+              $sql.=" + ";
+            }
+          }
+          
+          $sql.=" ) sum_event_".($i+1);
+          if (($i+1) <= count($eventsNormalId)) {
+            $sql.=", ";
+          }
+
+          //promedios
+          $sql.="ROUND ( ( ";
+          for ($j=0; $j < $numJudges; $j++) { 
+            $sql.= "ju".($j+1)."ev".($i + 1).".scoreval";
+            if (($j+1) < $numJudges) {
+              $sql.=" + ";
+            }
+          }
+          
+          $sql.=" ) / ".$numJudges.",2 ) prom_event_".($i+1). " ";
+          if (($i+1) < count($eventsNormalId)) {
+            $sql.=", ";
+          }
+      }
+
+      $sql.= ", (";
+      for ($i=0; $i < count($eventsNormalId); $i++) { 
+        $sql.="(";
+        for ($j=0; $j < $numJudges; $j++) { 
+          $sql.= "ju".($j+1)."ev".($i + 1).".scoreval";
+          if (($j+1) < $numJudges) {
+            $sql.=" + ";
           }
         }
+        $sql.=")";
+        if (($i+1) < count($eventsNormalId)) {
+          $sql.=" + ";
+        }
+      }
+      $sql.= " ) semifinal, ";
 
-         $sql.= "ORDER BY city.`name` ASC";
+      //RONDA DE PREGUNTAS
+      for ($j=0; $j < $numJudges ; $j++) { 
+        $sql.= "ju".($j+1)."ev4.scoreval score_ju_".($j+1)."_event4";
+        if (($j+1) <= $numJudges) {
+          $sql.=", ";
+        }
+      }
 
-        dd($sql);
+      $sql.= " (";
+      for ($j=0; $j < $numJudges ; $j++) { 
+        $sql.= "ju".($j+1)."ev4.scoreval ";
+        if (($j+1) < $numJudges) {
+          $sql.=" + ";
+        }
+      }
 
+      $sql.= ") sum_event_4, ";
+
+      $sql.= " ROUND( ( ";
+      for ($j=0; $j < $numJudges; $j++) {
+        $sql.= "ju".($j+1)."ev4.scoreval ";
+        if (($j+1) < $numJudges) {
+          $sql.=" + ";
+        }  
+      }
+      $sql.= "/".$numJudges." ),2  ) prom_event_4, ";
+      
+
+      //gran total
+      $sql.= "( ";
+      for ($i=0; $i < $numAllEvents ; $i++) { 
+        $sql.=" ( ";
+        for ($j=0; $j < $numJudges; $j++) { 
+          $sql.=" ju".($j+1)."ev".($i+1).".scoreval";
+          if (($j+1) < $numJudges) {
+            $sql.=" + ";
+          }
+        }
+        $sql.=")";
+        if (($i+1) < $numAllEvents) {
+          $sql.=" + ";
+        }
+      }
+
+      $sql.=") gran_total, ";
+
+
+       //gran total
+      $sql.= "ROUND ( ( ";
+      for ($i=0; $i < $numAllEvents ; $i++) { 
+        $sql.=" ( ";
+        for ($j=0; $j < $numJudges; $j++) { 
+          $sql.=" ju".($j+1)."ev".($i+1).".scoreval";
+          if (($j+1) < $numJudges) {
+            $sql.=" + ";
+          }
+        }
+        $sql.=")";
+        if (($i+1) < $numAllEvents) {
+          $sql.=" + ";
+        }
+      }
+
+      $sql.=") / ".$numJudges."  , 2) promedio_final ";
+
+
+
+      //from
+      $sql.= " FROM city ,"; 
+
+      for ($i=0; $i < count($eventsNormalId) ; $i++) {
+        for ($j=0; $j < $numJudges; $j++) { 
+          $sql.= "ju".($j+1)."ev".($i+1)." ";
+          if (($j+1) <= $numJudges) {
+              $sql.=" , ";
+          }
+        }
+      }
+      
+      for ($j=0; $j < $numJudges ; $j++) { 
+        $sql.= "ju".($j+1)."ev4";
+          if (($j+1) < $numJudges) {
+              $sql.=" , ";
+          }
+      }
+
+
+
+
+      //where
+      $sql.= " WHERE "; 
+      for ($i=0; $i < count($eventsNormalId) ; $i++) {
+        for ($j=0; $j < $numJudges; $j++) { 
+          $sql.= "city.id = ju".($j+1)."ev".($i+1).".idcanton ";
+          if (($j+1) <= $numJudges) {
+              $sql.=" AND ";
+          }
+        }
+      }
+
+      for ($j=0; $j < $numJudges; $j++) { 
+          $sql.= "city.id = ju".($j+1)."ev4.idcanton";
+          if (($j+1) < $numJudges) {
+              $sql.=" AND ";
+          }
+        }
+      
+      $sql.=" order by gran_total desc ";
+
+      return $dataEvent =  DB::select(DB::raw($sql));
+
+
+       
 
     }
 }

@@ -13,7 +13,7 @@ class EventRepository implements EventRepositoryInterface
 
 	public function getActives()
 	{
-		return Event::where('state',1)->orderBy('is_current','desc')->get();
+		return Event::where('state',1)->orderBy('id','ASC')->orderBy('is_current','desc')->get();
 	}
 
 	public function getCurrentName()
