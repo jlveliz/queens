@@ -139,10 +139,8 @@ class Score extends Model
               break;
           }
         } else {
-          $sql.= "ORDER BY city.`name` ASC";
+          $sql.= "ORDER BY `sumatoria` desc , city.`name`  ";
         }
-
-
 
         return $dataEvent =  DB::select(DB::raw($sql));
         
@@ -350,5 +348,39 @@ class Score extends Model
 
        
 
+    }
+
+
+    public static function getFaltantes()
+    {
+      
+      $eventRepo = (new EventRepository())->getActives();
+      $eventsId = "";
+      foreach ($eventRepo as $key => $event) {
+          $eventsId.= $event->id;
+          if ( ($key +1) < count($eventRepo) ) {
+            $eventsId.=",";
+          }
+      }
+
+      $sql = " SELECT
+            `user`.username,
+            city.`name` canton,
+            `event`.`name` evento
+          FROM
+            `user`,
+            city,
+            `event`,
+            score
+          WHERE
+            `user`.id = score.user_id
+          AND `event`.id in (".$eventsId.")
+          AND score.`value` = 0
+          and score.city_id = city.id
+          and score.event_id = `event`.id
+          order by `user`.id,
+          city.`name`,`event`.`name` ";
+
+      return DB::select(DB::raw($sql));
     }
 }

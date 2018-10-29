@@ -24,7 +24,7 @@ class MissRepository implements MissRepositoryInterface
 
 	public function enum($params = null)
 	{
-		return Miss::leftJoin('city','miss.city_id','=','city.id')->orderBy('city.name','asc')->get();
+		return Miss::select('miss.*')->leftJoin('city','miss.city_id','=','city.id')->orderBy('city.name','asc')->get();
 		
 	}
 

@@ -48,6 +48,7 @@
 
  <ul class="nav nav-tabs" role="tablist">
 	<li role="presentation" class="active"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Eventos</a></li>
+	<li role="presentation"><a href="#faltantes" aria-controls="faltantes" role="tab" data-toggle="tab">Faltantes</a></li>
 	<li role="presentation"><a href="#semifinalists" aria-controls="semifinalists" role="tab" data-toggle="tab">10 Semifinalistas</a></li>
 	<li role="presentation"><a href="#finalists" aria-controls="finalists" role="tab" data-toggle="tab">5 Finalistas</a></li>
 	<li role="presentation"><a href="#finalResult" aria-controls="finalResult" role="tab" data-toggle="tab">Resultado Final</a></li>
@@ -61,6 +62,7 @@
 					<table class="table table-bordered table-responsive table-dashboard">
 						<thead>
 							<tr>
+								<th>N°</th>
 								<th>Cantón</th>
 								@foreach ($judges as $judge)
 								<th>{{$judge->username}}</th>
@@ -71,8 +73,9 @@
 						</thead>
 						<tbody>
 							@foreach (App\Score::getScore($event->id) as $key =>  $score)
-								<tr>
-									<td>{{$score->name}}</td>
+								<tr class="@if( ($key + 1) == 1) success @endif">
+									<td>{{($key + 1)}}</td>
+									<td>@if( ($key + 1) == 1) <b> @endif{{$score->name}} @if( ($key + 1) == 1)</b>@endif</td>
 									@for ($i = 0; $i < count($judges); $i++)
 										@php $jueznum = "juez".($i+1); @endphp
 										<td>{{$score->$jueznum}}</td>
@@ -86,6 +89,34 @@
 				</div>
 			@endforeach
 		</div>
+		
+		<div role="tabpanel" class="tab-pane" id="faltantes">
+			<div class="col-md-12">
+				<h4><b>Semifinalistas</b></h4>
+				<table class="table table-bordered table-responsive table-dashboard">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>Usuario</th>
+							<th>Cantón</th>
+							<th>Evento</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (App\Score::getFaltantes() as $key =>  $faltante)
+							<tr>
+								<td>{{($key + 1)}}</td>
+								<td>{{$faltante->username}}</td>
+								<td>{{$faltante->canton}}</td>
+								<td>{{$faltante->evento}}</td>
+							</tr>
+						@endforeach
+						<tr></tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
 		<div role="tabpanel" class="tab-pane" id="semifinalists">
 			<div class="col-md-12">
 				<h4><b>Semifinalistas</b></h4>
