@@ -14,7 +14,8 @@ class Score extends Model
     	'city_id',
     	'user_id',
     	'event_id',
-    	'value'
+    	'value',
+      'round_of_questions'
     ];
 
 
@@ -341,6 +342,8 @@ class Score extends Model
         }
       
       $sql.=" order by gran_total desc ";
+
+      
 
       return $dataEvent =  DB::select(DB::raw($sql));
 

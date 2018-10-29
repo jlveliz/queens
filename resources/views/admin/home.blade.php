@@ -3,7 +3,7 @@
 @section('content')
 <div class="row">
 	<div class="col-md-4">
-		<div class="panel panel-default">
+		<div class="panel panel-default" id="current-event">
 		    <div class="panel-heading">Selección de Evento Actual</div>
 
 		    <div class="panel-body">
@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="col-md-4">
-		<div class="panel panel-default">
+		<div class="panel panel-default"  id="reset-points">
 		    <div class="panel-heading">Reinicializar Puntos</div>
 		    <div class="panel-body">
 		    	<form action="{{ route('reset') }}" method="post" id="reset-form">
@@ -58,7 +58,7 @@
 			@foreach ($events as $event)
 				<div class="col-md-6">
 					<h4><b>{{$event->name}}</b></h4>
-					<table class="table table-bordered table-responsive">
+					<table class="table table-bordered table-responsive table-dashboard">
 						<thead>
 							<tr>
 								<th>Cantón</th>
@@ -86,10 +86,10 @@
 				</div>
 			@endforeach
 		</div>
-		<div role="tabpanel" class="tab-pane active" id="semifinalists">
+		<div role="tabpanel" class="tab-pane" id="semifinalists">
 			<div class="col-md-12">
 				<h4><b>Semifinalistas</b></h4>
-				<table class="table table-bordered table-responsive">
+				<table class="table table-bordered table-responsive table-dashboard">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -116,13 +116,17 @@
 						@endforeach
 					</tbody>
 				</table>
+				<hr>
+				<div class="col-md-2 col-md-offset-6">
+					<a type="button" class="btn btn-default" href="{{ route('print',['type'=>'semifinalist']) }}" target="_blank"><i class="fa fa-print"></i> Imprimir</a>
+				</div>
 			</div>
 		</div>
 
-		<div role="tabpanel" class="tab-pane active" id="finalists">
+		<div role="tabpanel" class="tab-pane" id="finalists">
 			<div class="col-md-12">
 				<h4><b>Semifinalistas</b></h4>
-				<table class="table table-bordered table-responsive">
+				<table class="table table-bordered table-responsive table-dashboard">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -149,47 +153,73 @@
 						@endforeach
 					</tbody>
 				</table>
+				<hr>
+				<div class="col-md-2 col-md-offset-6">
+					<a type="button" class="btn btn-default" href="{{ route('print',['type'=>'finalist']) }}" target="_blank"><i class="fa fa-print"></i> Imprimir</a>
+				</div>
 			</div>
 		</div>
 
-		<div role="tabpanel" class="tab-pane active" id="finalResult">
+		<div role="tabpanel" class="tab-pane" id="finalResult">
 			<h1>Resultado Final</h1>
-			<table class="table table-bordered">
+			<table class="table table-bordered table-dashboard">
 				<thead>
 						<tr>
 							<th></th>
-						@foreach ($events as $event)
+						@foreach ($events as $key =>  $event)
 							<th colspan="8">
 								{{ $event->name }}
 							</th>
+							@if ( ($key + 1) == 3  )
+								{{-- para la semifinal --}}
+								<th></th>
+							@endif
 						@endforeach
+							<th colspan="2"></th>
 						</tr>
 						<tr>
 							<th></th>
 							@for ($i = 0; $i < count($events) ; $i++)
-								@foreach ($judges as $judge)
-									<th> {{ $judge->username }} </th>
+								@foreach ($judges as $key =>  $judge)
+									<th class="text-center"> Juez #{{($key+1)}} </th>
 								@endforeach
-								<th>Sumatoria</th>
-								<th>Promedio</th>
-								@if (($i +1 ) == 3))
-									<th>Semifinal</th>
+								<th class="text-center">Suma</th>
+								<th class="text-center">Prom</th>
+								@if ( ($i +1 ) == 3)
+									<th class="text-center">Semifinal</th>
 								@endif
 							@endfor
+							<th class="text-center">Sum Final</th>
+							<th class="text-center">Promedio Ge.</th>
 						</tr>
 				</thead>
 				<tbody>
 					@foreach (App\Score::getFullScore() as $element)
 						<tr>
-							<td>{{ $element->canton }}</td>
-							{{-- TODO  CORRER LOS EVENTOS --}}
-							{{-- @for ($i = 0; $i < counts() ; $i++) --}}
-								{{-- expr --}}
-							{{-- @endfor --}}
+							<td><b>{{ $element->canton }}</b></td>
+							@for ($i = 0; $i < count($events) ; $i++)
+								@for ($j = 0; $j < count($judges) ; $j++)
+								@php $score = "score_ju_".($j+1)."_event".($i+1); @endphp
+								<td class="text-center">{{$element->$score}}</td>
+								@endfor
+								@php $resultevent = "sum_event_".($i+1);  @endphp
+								@php $promtevent = "prom_event_".($i+1);  @endphp
+								<td class="text-center">{{$element->$resultevent}}</td>
+								<td class="text-center">{{$element->$promtevent}}</td>
+								@if ( ($i +1 ) == 3)
+									<td class="text-center">{{$element->semifinal}}</td>
+								@endif
+							@endfor
+							<td class="text-center">{{$element->gran_total}}</td>
+							<td class="text-center">{{$element->promedio_final}}</td>
 						</tr>
 					@endforeach
 				</tbody>
 			</table>
+			<hr>
+			<div class="col-md-2 col-md-offset-6">
+				<a type="button" class="btn btn-default" href="{{ route('print',['type'=>'full']) }}" target="_blank"><i class="fa fa-print"></i> Imprimir</a>
+			</div>
 		</div>
 	</div>
 </div>

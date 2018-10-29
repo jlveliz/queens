@@ -41,7 +41,7 @@
 		        		<input type="hidden" name="city_id" value="{{$miss->city->id}}">
 		        		<input type="hidden" name="current_page" value="@if(Request::has('page')) {{Request::get('page')}}@else 1 @endif">
 		        		<select name="value" class="form-control" id="puntaje">
-		        			@for ($i = 0; $i <=10 ; $i++)
+		        			@for ($i = 1; $i <=10 ; $i++)
 		        				<option value="{{$i}}" @if(App\Score::get($current_event->id,$miss->city->id,Auth::id()) == $i) selected @endif>{{$i}} Puntos</option>
 		        			@endfor
 		        		</select>
