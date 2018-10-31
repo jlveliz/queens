@@ -6,12 +6,15 @@
 	<title></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<style>
+	html{
+		margin: 2pt
+	}
 	body {
 		margin: 0;
 		padding: 0
 	} 
 	table {
-		font-size: 9pt;
+		font-size: 7pt;
 		border:1px solid #cdcdcd;
 		border-spacing: 0;
     	border-collapse: all;
@@ -52,7 +55,7 @@
 					<tr>
 						<th></th>
 					@foreach ($events as $key =>  $event)
-						<th colspan="8">
+						<th colspan="9">
 							{{ $event->name }}
 						</th>
 						@if ( ($key + 1) == 3  )

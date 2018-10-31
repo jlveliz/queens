@@ -130,10 +130,10 @@ class Score extends Model
         if ($filter) {
           switch ($filter) {
             case 'semifinalist':
-              $sql .= " ORDER BY sumatoria DESC LIMIT 10";
+              $sql .= " ORDER BY sumatoria DESC LIMIT 5";
               break;
             case 'finalist':
-              $sql .= " ORDER BY sumatoria DESC LIMIT 5";
+              $sql .= " ORDER BY sumatoria DESC LIMIT 3";
               break;
             default:
               break;
@@ -234,7 +234,7 @@ class Score extends Model
 
       //RONDA DE PREGUNTAS
       for ($j=0; $j < $numJudges ; $j++) { 
-        $sql.= "ju".($j+1)."ev4.scoreval score_ju_".($j+1)."_event4";
+        $sql.= "ju".($j+1)."ev3.scoreval score_ju_".($j+1)."_event3";
         if (($j+1) <= $numJudges) {
           $sql.=", ";
         }
@@ -242,22 +242,22 @@ class Score extends Model
 
       $sql.= " (";
       for ($j=0; $j < $numJudges ; $j++) { 
-        $sql.= "ju".($j+1)."ev4.scoreval ";
+        $sql.= "ju".($j+1)."ev3.scoreval ";
         if (($j+1) < $numJudges) {
           $sql.=" + ";
         }
       }
 
-      $sql.= ") sum_event_4, ";
+      $sql.= ") sum_event_3, ";
 
       $sql.= " ROUND( ( ";
       for ($j=0; $j < $numJudges; $j++) {
-        $sql.= "ju".($j+1)."ev4.scoreval ";
+        $sql.= "ju".($j+1)."ev3.scoreval ";
         if (($j+1) < $numJudges) {
           $sql.=" + ";
         }  
       }
-      $sql.= "/".$numJudges." ),2  ) prom_event_4, ";
+      $sql.= "/".$numJudges." ),2  ) prom_event_3, ";
       
 
       //gran total
@@ -312,7 +312,7 @@ class Score extends Model
       }
       
       for ($j=0; $j < $numJudges ; $j++) { 
-        $sql.= "ju".($j+1)."ev4";
+        $sql.= "ju".($j+1)."ev3";
           if (($j+1) < $numJudges) {
               $sql.=" , ";
           }
@@ -333,7 +333,7 @@ class Score extends Model
       }
 
       for ($j=0; $j < $numJudges; $j++) { 
-          $sql.= "city.id = ju".($j+1)."ev4.idcanton";
+          $sql.= "city.id = ju".($j+1)."ev3.idcanton";
           if (($j+1) < $numJudges) {
               $sql.=" AND ";
           }

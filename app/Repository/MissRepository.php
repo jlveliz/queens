@@ -101,5 +101,10 @@ class MissRepository implements MissRepositoryInterface
 		return public_path().'/uploads/'.date('Y').'/';
 	}
 
+	public function semifinalist()
+	{
+		return Miss::select('miss.*')->leftJoin('city','miss.city_id','=','city.id')->where('miss.state',1)->whereIn('city.id',[4,6,3,2,1])->orderBy('city.name','asc')->paginate(1);
+	}
+
 
 }

@@ -119,8 +119,10 @@
 		theme:'fa',
 		allowedFileTypes: ['image'],
 		showUpload: false,
+		@if (!isset($miss))
 		minFileCount: 1,
-		maxFileCount: 3,
+		maxFileCount: 1,
+		@endif
 		autoReplace:true,
 		overwriteInitial:false,
 		showUploadedThumbs: true,

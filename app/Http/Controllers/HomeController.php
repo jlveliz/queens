@@ -46,8 +46,11 @@ class HomeController extends Controller
         if($eventType !=  $this->event->getCurrent()->generateSlug())
             return redirect('home');
 
-
-        $misses = $this->miss->paginate();
+        if ($this->event->getCurrent()->generateSlug() == 'ronda-de-preguntas') {
+            $misses = $this->miss->semifinalist();
+        } else {
+            $misses = $this->miss->paginate();
+        }
         return view('app.show',compact('misses'));
     }
 

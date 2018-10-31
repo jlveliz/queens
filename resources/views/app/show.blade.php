@@ -29,7 +29,7 @@
 		        		<li><b>Hobbies:</b> {{$miss->hobbies}}</li>
 		        	</ul>
 		        	@can('vote')
-		        	<hr>
+		        	<hr style="margin: 0px">
 		        	<form action="@if(App\Score::getId($current_event->id,$miss->city->id,Auth::id())){{ route('scores.update',['id' => App\Score::getId($current_event->id,$miss->city->id,Auth::id())]) }} @else {{ route('scores.store') }} @endif" method="POST">
 		        		{{ csrf_field() }}
 		        		@if (App\Score::getId($current_event->id,$miss->city->id,Auth::id()))
@@ -47,8 +47,9 @@
 		        		</select>
 		        		<button type="submit" class="btn btn-vote btn-block"><i class="fa fa-heart"></i> <b>VOTAR</b></button>
 		        	</form>
-		        	<hr>
+		        	<hr style="margin-top: 5px">
 		        	@endcan
+		        	<a class="btn btn-primary btn-block" href="{{ url('/home') }}"><i class="fa fa-home"></i> IR A INICIO</a>
 	        	</div>
 	        </div>
         @endforeach

@@ -49,8 +49,8 @@
  <ul class="nav nav-tabs" role="tablist">
 	<li role="presentation" class="active"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Eventos</a></li>
 	<li role="presentation"><a href="#faltantes" aria-controls="faltantes" role="tab" data-toggle="tab">Faltantes</a></li>
-	<li role="presentation"><a href="#semifinalists" aria-controls="semifinalists" role="tab" data-toggle="tab">10 Semifinalistas</a></li>
-	<li role="presentation"><a href="#finalists" aria-controls="finalists" role="tab" data-toggle="tab">5 Finalistas</a></li>
+	<li role="presentation"><a href="#semifinalists" aria-controls="semifinalists" role="tab" data-toggle="tab">5 Semifinalistas</a></li>
+	<li role="presentation"><a href="#finalists" aria-controls="finalists" role="tab" data-toggle="tab">3 Finalistas</a></li>
 	<li role="presentation"><a href="#finalResult" aria-controls="finalResult" role="tab" data-toggle="tab">Resultado Final</a></li>
 </ul>
 <div class="row">
@@ -64,8 +64,8 @@
 							<tr>
 								<th>N°</th>
 								<th>Cantón</th>
-								@foreach ($judges as $judge)
-								<th>{{$judge->username}}</th>
+								@foreach ($judges as $key => $judge)
+								<th>Juez#{{($key+1)}}</th>
 								@endforeach
 								<th>SUMATORIA</th>
 								<th>PROMEDIO</th>
@@ -78,7 +78,7 @@
 									<td>@if( ($key + 1) == 1) <b> @endif{{$score->name}} @if( ($key + 1) == 1)</b>@endif</td>
 									@for ($i = 0; $i < count($judges); $i++)
 										@php $jueznum = "juez".($i+1); @endphp
-										<td>{{$score->$jueznum}}</td>
+										<td class="">@if($jueznum == '0') <span class="text-danger"> @endif {{$score->$jueznum}} @if($jueznum == 0)</span> @endif</td>
 									@endfor
 									<td>{{$score->sumatoria}}</td>
 									<td>{{$score->promedio}}</td>
@@ -198,10 +198,10 @@
 						<tr>
 							<th></th>
 						@foreach ($events as $key =>  $event)
-							<th colspan="8">
+							<th colspan="9">
 								{{ $event->name }}
 							</th>
-							@if ( ($key + 1) == 3  )
+							@if ( ($key + 1) == 2  )
 								{{-- para la semifinal --}}
 								<th></th>
 							@endif
@@ -216,7 +216,7 @@
 								@endforeach
 								<th class="text-center">Suma</th>
 								<th class="text-center">Prom</th>
-								@if ( ($i +1 ) == 3)
+								@if ( ($i +1 ) == 2)
 									<th class="text-center">Semifinal</th>
 								@endif
 							@endfor
@@ -237,7 +237,7 @@
 								@php $promtevent = "prom_event_".($i+1);  @endphp
 								<td class="text-center">{{$element->$resultevent}}</td>
 								<td class="text-center">{{$element->$promtevent}}</td>
-								@if ( ($i +1 ) == 3)
+								@if ( ($i +1 ) == 2)
 									<td class="text-center">{{$element->semifinal}}</td>
 								@endif
 							@endfor
