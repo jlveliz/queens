@@ -8,10 +8,11 @@
 <div id="wrapper">
       <div id="login" class="animated form bounceIn">
         <section class="login_content">
-          <img src="{{ asset('images/logo.png') }}" style="width: 70%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
+          <img src="{{ asset('images/logo_reinas.png') }}" style="width: 70%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
           <form method="post" action="{{ route('dologin') }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <h1>{{config('app.name')}} <br> Ingreso</h1>
+            <h1>{{config('app.name')}}</h1>
+            <h3>Ingreso</h3>
             @if (count($errors) > 0)
               <div class="alert alert-danger alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>

@@ -18,16 +18,18 @@
 	   		<table class="table table-bordered">
 	   			<thead>
 	   				<tr>
-	   					<th class="text-center col-md-8">Nombre</th>
-	   					<th class="text-center col-md-2">Estado</th>
-	   					<th class="text-center col-md-2">Acción</th>
+	   					<th class="text-center">N°</th>
+	   					<th class="text-center">Nombre</th>
+	   					<th class="text-center">Estado</th>
+	   					<th class="text-center">Acción</th>
 	   				</tr>
 	   			</thead>
 	   			<tbody>
 	   				@if (count($cities) > 0)
-	   					@foreach ($cities as $city)
+	   					@foreach ($cities as $key => $city)
 			   				<tr>
-			   					<td>{{$city->name}}</td>
+								<td> {{$key+1}} </td>   
+								<td>{{$city->name}}</td>
 			   					<td>@if($city->state == 1) <b class="text-success">Activo</b> @else <b class="text-danger"> Inactivo</b> @endif</td>
 			   					<td>
 			   						<a class="btn btn-primary btn-sm" href="{{ url('admin/cities/'.$city->id.'/edit') }}">Editar</a>

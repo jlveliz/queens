@@ -108,16 +108,16 @@ hr {
 
 .inner-container {
     background: #EDEDED;
-    border: 1px solid #ff7200;
+    border: 1px solid #136CAF;
     padding:  20px
 }
 
 .inner-container img {
-    width: 15%!important;
+    width: 20%!important;
 }
 
 .inner-container h1 {
-    color: #ff7200;
+    color: #136CAF;
     text-transform: uppercase;
     text-align: center;
     font-weight: bolder;
@@ -164,7 +164,7 @@ hr {
     font-weight: bold;
 }
 .event-icon:hover {
-    background: #fdbe25;
+    background: #f8c900;
     text-decoration: none;
     color: #ffffff
 }
@@ -423,14 +423,14 @@ hr {
 
 .btn-vote {
     color: #fff;
-    background-color: #fe7c34;
-    border-color: #aa9335;
+    background-color: #ef1e38;
+    border-color: #b8172a;
     border-radius: 2px;
     margin-top: 5px;
 }
 
 .btn-vote:hover {
-    background-color: #aa9335;
+    background-color: #b8172a;
     color: #fff;
 }
 
@@ -484,9 +484,25 @@ hr {
     background: #36446b;
     border-radius: 5px;
     color: #ffffff;
-    border: 1px solid #ff7200;
+    border: 1px solid #136CAF;
 }
 
-#puntaje>option:focus, {
+#puntaje>option:focus {
     font-size: 40px;
+}
+
+.show-miss-header {
+    color:#de1b1a;
+}
+
+.panel-default>.panel-heading, 
+.panel-default>.panel-body{
+    background-color: rgb(211, 224, 233, 0.5);
+}
+
+.back-logo-institution {
+    background-image: url('../images/logo.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: contain;
 }

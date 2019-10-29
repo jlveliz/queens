@@ -302,21 +302,27 @@ class Score extends Model
       //from
       $sql.= " FROM city ,"; 
 
-      for ($i=0; $i < count($eventsNormalId) ; $i++) {
-        for ($j=0; $j < $numJudges; $j++) { 
-          $sql.= "ju".($j+1)."ev".($i+1)." ";
-          if (($j+1) <= $numJudges) {
+    for ($j=0; $j < $numJudges; $j++) { 
+        
+      for ($i=0; $i < $numAllEvents ; $i++) {
+            $sql.= "ju".($j+1)."ev".($i+1)." ";
+            
+          if (($i+1) < $numAllEvents) {
               $sql.=" , ";
           }
-        }
       }
+
+      if( ($j + 1) < $numJudges) {
+        $sql.= " , ";
+      }
+    }
       
-      for ($j=0; $j < $numJudges ; $j++) { 
-        $sql.= "ju".($j+1)."ev3";
-          if (($j+1) < $numJudges) {
-              $sql.=" , ";
-          }
-      }
+      // for ($j=0; $j < $numJudges ; $j++) { 
+      //   $sql.= "ju".($j+1)."ev3";
+      //     if (($j+1) < $numJudges) {
+      //         $sql.=" , ";
+      //     }
+      // }
 
 
 

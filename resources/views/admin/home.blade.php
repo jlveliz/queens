@@ -198,7 +198,7 @@
 						<tr>
 							<th></th>
 						@foreach ($events as $key =>  $event)
-							<th colspan="9">
+							<th colspan="{{count($judges) + 2 }} ">
 								{{ $event->name }}
 							</th>
 							@if ( ($key + 1) == 2  )
@@ -228,10 +228,10 @@
 					@foreach (App\Score::getFullScore() as $element)
 						<tr>
 							<td><b>{{ $element->canton }}</b></td>
-							@for ($i = 0; $i < count($events) ; $i++)
+							@for ($i = 0; $i < 3 ; $i++)
 								@for ($j = 0; $j < count($judges) ; $j++)
-								@php $score = "score_ju_".($j+1)."_event".($i+1); @endphp
-								<td class="text-center">{{$element->$score}}</td>
+									@php $score = "score_ju_".($j+1)."_event".($i+1); @endphp
+									<td class="text-center">{{$element->$score}}</td>
 								@endfor
 								@php $resultevent = "sum_event_".($i+1);  @endphp
 								@php $promtevent = "prom_event_".($i+1);  @endphp
@@ -241,6 +241,7 @@
 									<td class="text-center">{{$element->semifinal}}</td>
 								@endif
 							@endfor
+							
 							<td class="text-center">{{$element->gran_total}}</td>
 							<td class="text-center">{{$element->promedio_final}}</td>
 						</tr>

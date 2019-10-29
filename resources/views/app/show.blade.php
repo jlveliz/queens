@@ -2,19 +2,20 @@
 
 @section('content')
 <div class="container-index">
-    <div class="vertical-center inner-container col-md-10 col-md-offset-1">
-    	<img src="{{ asset('images/logo.png') }}" style="width: 15%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
+    <div class="vertical-center inner-container col-md-10 col-md-offset-1 back-logo-institution">
+    	{{-- <img src="{{ asset('images/logo_reinas.png') }}" style="width: 15%;display: block;margin:0 auto" class="img-responsive text-center" alt=""> --}}
         <h1 class="text-center"> {{config('app.name')}} {{date('Y')}} - {{$current_event->name}} </h1>
         <p class="text-center">
-	        <small>Hola, {{Auth::user()->username}}</small> 
-	        <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Salir</a>
+			Hola, {{Auth::user()->username}}
+			<br>
+	        <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> <i class="fa fa-sign-out"></i> Salir</a>
 	        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 	            {{ csrf_field() }}
 	        </form>
         </p>
 
         @foreach ($misses as $miss)
-	        <h3 class="text-center"><b><span style="color: #ff7200">{{strtoupper($miss->city->name)}}</span> - {{explode(' ',$miss->name)[0]}} {{explode(' ',$miss->last_name)[0]}}</b></h3>
+	        <h3 class="text-center show-miss-header text-uppercase"><b>{{strtoupper($miss->city->name)}}</b></h3>
 	        <div class="col-md-8">
 	        	<img src="{{ asset($miss->photos) }}" alt="" class="img-responsive text-center img-block" style="width: 42%!important">
 	        </div>
@@ -45,7 +46,7 @@
 		        				<option value="{{$i}}" @if(App\Score::get($current_event->id,$miss->city->id,Auth::id()) == $i) selected @endif>{{$i}} Puntos</option>
 		        			@endfor
 		        		</select>
-		        		<button type="submit" class="btn btn-vote btn-block"><i class="fa fa-heart"></i> <b>VOTAR</b></button>
+		        		<button type="submit" class="btn btn-vote btn-block btn-lg"><i class="fa fa-heart"></i> <b>VOTAR</b></button>
 		        	</form>
 		        	<hr style="margin-top: 5px">
 		        	@endcan

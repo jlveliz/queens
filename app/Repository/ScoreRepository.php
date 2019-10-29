@@ -110,4 +110,21 @@ class ScoreRepository implements ScoreRepositoryInterface
 		return true;
 	}
 
+
+	public function getSemifinalist()
+	{
+		$semifinalists = Score::getScore(null,'semifinalist');
+
+		$citiesSemifinalists = '';
+
+		for ($i=0; $i < count($semifinalists) ; $i++) { 
+			$citiesSemifinalists.= "'". $semifinalists[$i]->name ."'";
+			if( ($i + 1 ) < count($semifinalists) ) $citiesSemifinalists.=',';
+		}
+		
+		return $citiesSemifinalists; 
+		
+
+	}
+
 }

@@ -46,7 +46,7 @@
 	   					@endforeach
 	   				@else
 	   					<tr>
-	   						<td colspan="4" rowspan="" headers=""><p class="text-muted text-center">No existen Candidatas a Mostrar</p> </td>
+	   						<td colspan="6" rowspan="" headers=""><p class="text-muted text-center">No existen Candidatas a Mostrar</p> </td>
 	   					</tr>
 	   				@endif
 	   			</tbody>

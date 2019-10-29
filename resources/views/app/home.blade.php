@@ -1,15 +1,15 @@
 @extends('layouts.frontend')
 
 @section('content')
-<div class="container-index">
-    <div class="vertical-center inner-container col-md-10 col-md-offset-1">
-        <img src="{{ asset('images/logo.png') }}" style="width: 70%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
+<div class="container-index  ">
+    <div class="vertical-center inner-container col-md-10 col-md-offset-1 ">
+        <img src="{{ asset('images/logo_reinas.png') }}" style="width: 70%;display: block;margin:0 auto" class="img-responsive text-center" alt="">
         <h1 class="text-center"> {{config('app.name')}} - {{date('Y')}}  </h1>
 
-        <div class="panel panel-default">
+        <div class="panel panel-default back-logo-institution">
             <div class="panel-heading text-center" style="font-size: 20px"><b>Seleccione un evento para continuar</b>
                 <br>
-                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Salir</a>
+                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"> <i class="fa fa-sign-out"></i> Salir</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>

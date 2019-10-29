@@ -27,6 +27,8 @@ Route::prefix('/admin')->middleware('admin')->group(function() {
 	Route::resource('/cities', 'CityController');
 	Route::resource('/events', 'EventController');
 	Route::resource('/users', 'UserController');
+	//EMERGENCIAS!!
+	// Route::get('reset','AdminController@reset')->name('reset');
 	Route::post('reset','AdminController@reset')->name('reset');
 
 	Route::get('print/{type}','PdfController@print')->name('print');

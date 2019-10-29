@@ -223,13 +223,13 @@ form:after {
 .login_content form input[type="text"]:focus,
 .login_content form input[type="email"]:focus,
 .login_content form input[type="password"]:focus {
-    -webkit-box-shadow: 0 0 2px #ff7200 inset;
-    -moz-box-shadow: 0 0 2px #ff7200 inset;
-    -ms-box-shadow: 0 0 2px #ff7200 inset;
-    -o-box-shadow: 0 0 2px #ff7200 inset;
-    box-shadow: 0 0 2px #ff7200 inset;
+    -webkit-box-shadow: 0 0 2px #136CAF inset;
+    -moz-box-shadow: 0 0 2px #136CAF inset;
+    -ms-box-shadow: 0 0 2px #136CAF inset;
+    -o-box-shadow: 0 0 2px #136CAF inset;
+    box-shadow: 0 0 2px #136CAF inset;
     background-color: #fff;
-    border: 1px solid #ff7200;
+    border: 1px solid #136CAF;
     outline: none;
 }
 
@@ -314,14 +314,14 @@ header {
 
 .btn-submit {
     color: #ffffff;
-    background-color: #ff7200;
-    border-color: #ff7200;
+    background-color: #136CAF;
+    border-color: #136CAF;
 }
 
 .btn-submit:hover {
     color: #ffffff;
-    background-color: #ff7200;
-    border-color: #ff7200;
+    background-color: #136CAF;
+    border-color: #136CAF;
 }
 
 .copyright {

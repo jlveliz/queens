@@ -5,23 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\RepositoryInterface\MissRepositoryInterface;
 use App\RepositoryInterface\EventRepositoryInterface;
+use App\RepositoryInterface\ScoreRepositoryInterface;
 
 class HomeController extends Controller
 {
     
     protected $event;
     protected $miss;
+    protected $score;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(EventRepositoryInterface $event, MissRepositoryInterface $miss)
+    public function __construct(EventRepositoryInterface $event, MissRepositoryInterface $miss, ScoreRepositoryInterface $score)
     {
         $this->middleware('auth');
         $this->event = $event;
         $this->miss = $miss;
+        $this->score = $score;
     }
 
     /**
@@ -47,7 +50,9 @@ class HomeController extends Controller
             return redirect('home');
 
         if ($this->event->getCurrent()->generateSlug() == 'ronda-de-preguntas') {
-            $misses = $this->miss->semifinalist();
+            $citiesSemifinalists = $this->score->getSemifinalist();
+            $misses = $this->miss->semifinalist($citiesSemifinalists);
+            
         } else {
             $misses = $this->miss->paginate();
         }
