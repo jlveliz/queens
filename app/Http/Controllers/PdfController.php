@@ -33,13 +33,13 @@ class PdfController extends Controller
     		case 'finalist':
     			$viewName = "admin.pdf.finalist";
     			$data = Score::getScore(null,'finalist');
-    			$streamName = "5 Finalistas";
+    			$streamName = "3 Finalistas";
     			$orientation = "landscape";
     			break;
     		case 'semifinalist':
     			$viewName = "admin.pdf.semifinalist";
     			$data = Score::getScore(null,'semifinalist');
-    			$streamName = "10 Semifinalistas";
+    			$streamName = "5 Semifinalistas";
     			$orientation = "landscape";
     			break;
     		default:

@@ -55,7 +55,7 @@
 					<tr>
 						<th></th>
 					@foreach ($events as $key =>  $event)
-						<th colspan="9">
+						<th colspan="8">
 							{{ $event->name }}
 						</th>
 						@if ( ($key + 1) == 3  )
