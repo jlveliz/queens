@@ -1,7 +1,7 @@
 # Concurso Reinas del Guayas 
 <p>Sistema de votación</p>
 <p>Organizado por el Gobierno del Guayas</p>
-<p>Dev: Jorge Veliz - jorge.veliz@guayas.gob.ec</p>
+Dev: Jorge Veliz - info@thejlmedia.com
 
 ## Instalación
 
@@ -10,7 +10,7 @@
 3. Ejecutar `composer install`
 
 
-##TODO
+## TODO
 * Control de Sesiones
 * Notificaciones en vivo de votaciones
 * Impresion de resultados por evento
